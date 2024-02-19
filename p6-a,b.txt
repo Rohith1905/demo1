@@ -1,0 +1,71 @@
+import java.util.Scanner;
+public class GraphDFS {
+private int vertices;
+private int[][] adjacencyMatrix;
+public GraphDFS(int v) {
+vertices = v;
+adjacencyMatrix = new int[v][v];
+}
+public void addEdge(int start, int end) {
+adjacencyMatrix[start][end] = 1;
+adjacencyMatrix[end][start] = 1;}
+public void dfs(int startVertex, boolean[] visited) {
+System.out.print(startVertex + " ");
+visited[startVertex] = true;
+for (int i = 0; i < vertices; i++) {
+if (adjacencyMatrix[startVertex][i] == 1 && !visited[i]) {
+dfs(i, visited);
+}
+}
+}
+public static void main(String[] args) {
+Scanner scanner = new Scanner(System.in);
+System.out.print("Enter the number of vertices: ");
+int v = scanner.nextInt();
+GraphDFS graph = new GraphDFS(v);
+System.out.println("Enter the adjacency matrix:");
+for (int i = 0; i < v; i++) {
+for (int j = 0; j < v; j++) {
+graph.adjacencyMatrix[i][j] = scanner.nextInt();
+}
+}
+System.out.print("Enter the starting vertex for DFS: ");
+int startVertex = scanner.nextInt();
+boolean[] visited = new boolean[v];
+System.out.print("DFS traversal starting from vertex " + startVertex + ":
+");
+graph.dfs(startVertex, visited);
+scanner.close();
+}
+}
+////(-B-)
+import java.util.Scanner;
+public class Floyd {
+void floyd(int[][] w, int n) {
+int i, j, k;
+for (k = 1; k <= n; k++)
+for (i = 1; i <= n; i++)
+for (j = 1; j <= n; j++)
+w[i][j] = Math.min(w[i][j], w[i][k] + w[k][j]);
+}public static void main(String[] args) {
+int a[][] = new int[10][10];
+int n, i, j;
+Scanner sc = new Scanner(System.in);
+System.out.println("Enter the number of vertices");
+n = sc.nextInt();
+System.out.println("Enter the weighted matrix");
+for (i = 1; i <= n; i++)
+for (j = 1; j <= n; j++)
+a[i][j] = sc.nextInt();
+Floyd f = new Floyd();
+f.floyd(a, n);
+System.out.println("The shortest path matrix is");
+for (i = 1; i <= n; i++) {
+for (j = 1; j <= n; j++) {
+System.out.print(a[i][j] + " ");
+}
+System.out.println();
+}
+sc.close();
+}
+}
