@@ -8,7 +8,7 @@ adjacencyMatrix = new int[v][v];
 }
 public void addEdge(int start, int end) {
 adjacencyMatrix[start][end] = 1;
-adjacencyMatrix[end][start] = 1;}
+//adjacencyMatrix[end][start] = 1;}
 public void dfs(int startVertex, boolean[] visited) {
 System.out.print(startVertex + " ");
 visited[startVertex] = true;
