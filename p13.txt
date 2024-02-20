@@ -1,0 +1,44 @@
+import java.util.Arrays;
+public class TSP {
+private static int tsp(int[][] graph, int start, int mask, int current,
+int[][] memo) {
+int n = graph.length;
+if (mask == (1 << n) - 1) {
+return graph[current][start];
+}
+if (memo[mask][current] != -1) {
+return memo[mask][current];
+}int minCost = Integer.MAX_VALUE;
+for (int city = 0; city < n; city++) {
+if ((mask & (1 << city)) == 0) {
+int newMask = mask | (1 << city);
+int cost = graph[current][city] + tsp(graph, start, newMask,
+city, memo);
+minCost = Math.min(minCost, cost);
+}
+}
+memo[mask][current] = minCost;
+return minCost;
+}
+public static int solveTSP(int[][] graph) {
+int n = graph.length;
+int[][] memo = new int[1 << n][n];
+for (int[] row : memo) {
+Arrays.fill(row, -1);
+}
+int start = 0; // Assuming starting from vertex 0
+int mask = 1; // Marking the starting vertex as visited
+return tsp(graph, start, mask, start, memo);
+}
+public static void main(String[] args) {
+int[][] graph = {
+{0, 10, 15, 20},
+{10, 0, 35, 25},
+{15, 35, 0, 30},
+{20, 25, 30, 0}
+};
+int minCost = solveTSP(graph);
+System.out.println("Minimum cost for the Travelling Salesman Problem: " +
+minCost);
+}
+}
